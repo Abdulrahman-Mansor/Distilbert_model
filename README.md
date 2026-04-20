@@ -3,7 +3,7 @@
 This deployment uses an ultra-lightweight ONNX runtime instead of PyTorch, resulting in a much smaller container and faster inference speeds.
 
 ## 1. Get the Model
-Download the ONNX model files from Google Drive: `[INSERT LINK HERE]`
+Download the ONNX model files from Google Drive: `https://drive.google.com/file/d/1AU_1ppB0RAzpgVxoIdwAUjcIC91EBLrS/view?usp=sharing`
 Extract the contents into a folder named `model` in the root of this project.
 
 The structure must look exactly like this:
