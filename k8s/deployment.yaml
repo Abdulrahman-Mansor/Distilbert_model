@@ -26,12 +26,12 @@ spec:
             - -c
             - |
               pip install --no-cache-dir gdown && \
-              gdown "https://drive.google.com/uc?id=YOUR_FILE_ID" -O /model/model.zip && \
-              unzip /model/model.zip -d /model && \
-              rm /model/model.zip
+              gdown "https://drive.google.com/file/d/1152xEhIRVnQry9e1Idp0cOA4Y6Z52klS/view?usp=drive_link" && \
+              unzip *.zip && \
+              rm *.zip
           volumeMounts:
             - name: model-volume
-              mountPath: /model
+              mountPath: /content
 
       containers:
         - name: api
@@ -42,11 +42,11 @@ spec:
 
           volumeMounts:
             - name: model-volume
-              mountPath: /app/model
+              mountPath: /app/content
 
           env:
             - name: MODEL_DIR
-              value: /app/model
+              value: /app/content
 
           readinessProbe:
             httpGet:
