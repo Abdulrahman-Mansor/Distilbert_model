@@ -1,0 +1,22 @@
+name: Test docker image
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download model files
+        run: |
+          chmod +x downloadModel.sh
+          ./downloadModel.sh
+
+      - name: Run compose up
+        run: |
+          docker compose up -d --wait
+          docker images

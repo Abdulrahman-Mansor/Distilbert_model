@@ -1,0 +1,11 @@
+services:
+  model_api:
+    build: .
+    ports:
+      - "8000:8000"
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      MODEL_DIR: ${MODEL_DIR:-./models}
+    volumes:
+      - ./models:/app/models
+    user: appuser
