@@ -32,3 +32,6 @@ docker-compose.yml
 
 # readme
 README.md
+
+# Shell scripts
+*.sh

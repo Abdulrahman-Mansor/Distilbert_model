@@ -37,6 +37,11 @@ def softmax(x):
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum(axis=-1, keepdims=True)
 
+@app.get("/health", tags=["System"])
+def read_health():
+    """Endpoint for container orchestration readiness/liveness probes."""
+    return {"status": "healthy"}
+
 @app.post("/predict")
 async def predict_email(email: EmailRequest):
     try:
