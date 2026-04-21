@@ -32,7 +32,6 @@ docker-compose.yml
 
 # unused files
 *.sh
-*.txt
 *.md
 *.zip
 
