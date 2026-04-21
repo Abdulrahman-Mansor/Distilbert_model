@@ -52,7 +52,14 @@ while IFS= read -r url; do
         echo "✓ File already exists: $FILENAME. Skipping download."
     else
         echo "Downloading: $url -> $FILENAME"
-        if gdown --fuzzy "$url" -O "$CURRENT_DIR/"; then
+        FILE_ID="$(echo "$url" | sed -n 's|.*drive.google.com/file/d/\([^/]*\)/.*|\1|p')"
+        if [[ -n "$FILE_ID" ]]; then
+            DOWNLOAD_URL="https://drive.google.com/uc?id=$FILE_ID"
+        else
+            DOWNLOAD_URL="$url"
+        fi
+
+        if gdown "$DOWNLOAD_URL" -O "$CURRENT_DIR/$FILENAME"; then
             echo "✓ Successfully downloaded"
         else
             echo "✗ Failed to download: $url"
@@ -70,7 +77,7 @@ echo "================================="
 for zipfile in "$CURRENT_DIR"/*.zip; do
     if [ -f "$zipfile" ]; then
         echo "Unzipping $zipfile ..."
-        unzip -o "$zipfile" -d "$CURRENT_DIR"
+        unzip -o "$zipfile"
         if [ $? -eq 0 ]; then
             echo "✓ Unzipped: $zipfile"
         else

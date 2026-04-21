@@ -30,8 +30,12 @@ Dockerfile
 docker-compose.yml
 .dockerignore
 
-# readme
-README.md
-
-# Shell scripts
+# unused files
 *.sh
+*.txt
+*.md
+*.zip
+
+# Virtual environments
+.gdown-venv/
+content/
