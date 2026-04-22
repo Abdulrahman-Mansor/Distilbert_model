@@ -18,7 +18,7 @@ spec:
         - name: model-volume
           hostPath:
             # Change this to the exact absolute path on your local machine/WSL
-            path: /tmp/Distilbert_model/saved_model
+            path: /tmp/saved_distilbert_model
             # This tells K8s to create the folder on your machine if it's missing
             type: DirectoryOrCreate
 

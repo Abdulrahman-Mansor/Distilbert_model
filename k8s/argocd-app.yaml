@@ -11,7 +11,7 @@ spec:
     path: k8s
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: ai-model-dev
+    namespace: app2
   syncPolicy:
     automated:
       prune: true
