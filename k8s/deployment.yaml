@@ -16,7 +16,11 @@ spec:
     spec:
       volumes:
         - name: model-volume
-          emptyDir: {}
+          hostPath:
+            # Change this to the exact absolute path on your local machine/WSL
+            path: /tmp/Distilbert_model/saved_model
+            # This tells K8s to create the folder on your machine if it's missing
+            type: DirectoryOrCreate
 
       initContainers:
         - name: download-model
@@ -25,13 +29,25 @@ spec:
             - sh
             - -c
             - |
-              pip install --no-cache-dir gdown && \
-              gdown "https://drive.google.com/file/d/1152xEhIRVnQry9e1Idp0cOA4Y6Z52klS/view?usp=drive_link" && \
-              unzip *.zip && \
+              cd /model
+
+              if [ -f "model.onnx" ]; then
+                echo "Model already exists in /model. Skipping download!"
+                exit 0
+              fi
+              
+              apt-get update && apt-get install -y unzip 
+              pip install --no-cache-dir gdown 
+              gdown "https://drive.google.com/file/d/1152xEhIRVnQry9e1Idp0cOA4Y6Z52klS/view?usp=drive_link"
+              unzip *.zip 
+              mv content/drive/MyDrive/Roberta/DistilBERT/model/* .
+              rm -rf content
               rm *.zip
+              chmod -R a+r /model
+
           volumeMounts:
             - name: model-volume
-              mountPath: /content
+              mountPath: /model
 
       containers:
         - name: api
@@ -42,11 +58,11 @@ spec:
 
           volumeMounts:
             - name: model-volume
-              mountPath: /app/content
+              mountPath: /app/model
 
           env:
             - name: MODEL_DIR
-              value: /app/content
+              value: /app/model
 
           readinessProbe:
             httpGet:
